@@ -1,0 +1,28 @@
+{
+  "name": "electron-chat-app-demo",
+  "version": "1.0.0",
+  "description": "Electron Chat App Demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./test",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demian85/team-capture-chat-de.git"
+  },
+  "author": "Demián Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/demian85/team-capture-chat-de/issues"
+  },
+  "homepage": "https://github.com/demian85/team-capture-chat-de#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "electron": "^1.4.2",
+    "eslint": "^3.7.0",
+    "eslint-config-airbnb-base": "^8.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "mocha": "^3.1.0"
+  }
+}
