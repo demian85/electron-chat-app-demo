@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha ./test",
-    "start": "electron ."
+    "server": "node server.js",
+    "start": "npm run server && electron ."
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,9 @@
     "eslint-config-airbnb-base": "^8.0.0",
     "eslint-plugin-import": "^1.16.0",
     "mocha": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "4.14.0",
+    "socket.io": "1.4.8"
   }
 }

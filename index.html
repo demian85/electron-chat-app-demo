@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Electron Chat App</title>
+    <script type="text/javascript" src="socket.io.js"></script>
+    <script type="text/javascript" src="ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+  </head>
+  <body>
+    <main>
+      <div class="content">
+        <aside>
+          <ul id="users"></ul>
+        </aside>
+        <div id="chat"></div>
+      </div>
+      <div class="input">
+        <input type="text" id="text-input" />
+        <button id="send-btn">Send</button>
+      </div>
+    </main>
+  </body>
+</html>

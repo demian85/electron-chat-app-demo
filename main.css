@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+}
+html, body {
+  font-size: 12px;
+  height: 100%;
+}
+main {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.content {
+  display: flex;
+  flex-flow: row nowrap;
+  flex: 1 1 auto;
+}
+.input {
+  display: flex;
+  flex-flow: row nowrap;
+  border-top: 1px solid #000;
+  flex: 0 1 auto;
+  padding: 1em;
+}
+aside {
+  min-width: 10em;
+  flex: 0 1 auto;
+  padding: 1em;
+  border-right: 1px solid gray;
+}
+#chat {
+  flex: 1 1 auto;
+  padding: 1em;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+#users {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2em;
+}
+#text-input {
+  flex: 1 1 auto;
+  margin-right: 1em;
+}
+#send-btn {
+  flex: 0 0 auto;
+}
