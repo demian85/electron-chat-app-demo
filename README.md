@@ -1,5 +1,16 @@
 # Simple Electron Chat App
 
+This is just a demo of a basic chat app using Electron. The server is included and must be run using Node.js
+
+## Tiny features
+
+* You provide a username to enter a chat room. Server endpoint is configurable.
+* Supports Markdown.
+* List of connected users.
+* Informs connection and disconnection events.
+* Informs when someone is typing.
+* Supports multiple instances
+
 ## To Use
 
 To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
