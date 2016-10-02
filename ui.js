@@ -4,7 +4,6 @@ let socket;
 let username;
 
 window.onload = function () {
-  initSocket();
   initEvents();
 };
 
@@ -14,7 +13,11 @@ function $(sel) {
 
 function initSocket() {
   const server = $('#server-url').value.trim();
+  appendText(`Connecting...`);
   socket = io.connect(server);
+  socket.on('connect', () => {
+    appendText(`Connected to server ${server}`);
+  });
   socket.on('message', (data) => {
     appendText(`${data.username}: ${data.text}`);
   });
@@ -31,6 +34,9 @@ function initSocket() {
   socket.on('logout', (data) => {
     appendText(`${data.username} disconnected.`);
     updateUserList(data.users);
+  });
+  socket.on('error', (err) => {
+    appendText(`Unable to connect to server ${server}\n${JSON.stringify(err)}`);
   });
 }
 
@@ -62,6 +68,7 @@ function initEvents() {
       const value = this.value.trim();
       if (value) {
         username = this.value;
+        initSocket();
         login();
       }
     }
