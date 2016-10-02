@@ -1,5 +1,7 @@
 /* eslint-env browser, node */
 
+const marked = require('marked');
+
 let socket;
 let username;
 
@@ -86,7 +88,7 @@ function sendText() {
 }
 
 function appendText(text) {
-  $('#chat-text').textContent += `${escapeHtml(text)}\n`;
+  $('#chat-text').innerHTML += `${marked(escapeHtml(text))}\n`;
 }
 
 function escapeHtml(text) {

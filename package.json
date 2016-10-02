@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "express": "4.14.0",
+    "marked": "^0.3.6",
     "socket.io": "1.4.8"
   }
 }

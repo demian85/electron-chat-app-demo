@@ -50,11 +50,6 @@ aside > h3 {
   padding: 1rem;
 }
 
-#chat-text {
-  font-family: monospace;
-  white-space: pre-wrap;
-}
-
 #chat-status-msg {
   font-family: sans-serif;
   font-style: italic;
