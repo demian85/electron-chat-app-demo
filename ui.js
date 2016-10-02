@@ -21,7 +21,7 @@ function initSocket() {
     appendText(`Connected to server ${server}`);
   });
   socket.on('message', (data) => {
-    appendText(`${data.username}: ${data.text}`);
+    appendText(`__${data.username}:__ ${data.text}`);
   });
   socket.on('login', (data) => {
     appendText(`${data.username} has logged in.`);
@@ -88,11 +88,8 @@ function sendText() {
 }
 
 function appendText(text) {
-  $('#chat-text').innerHTML += `${marked(escapeHtml(text))}\n`;
-}
-
-function escapeHtml(text) {
-  return text.replace('<', '&lt;').replace('>', '&gt;');
+  const opts = { sanitize: true };
+  $('#chat-text').innerHTML += `${marked(text, opts)}\n`;
 }
 
 function setStatus(text) {
@@ -112,4 +109,5 @@ function updateUserList(users) {
 function login() {
   socket.emit('login', { username });
   $('#login-box').classList.add('hidden');
+  $('#text-input').focus();
 }
