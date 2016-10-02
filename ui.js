@@ -103,7 +103,9 @@ function setStatus(text) {
 }
 
 function updateUserList(users) {
-  $('#users').innerHTML = Array.from(users).map(name => `<li>${name}</li>`).join('');
+  const opts = { sanitize: true };
+  $('#users').innerHTML = Array.from(users).map(name => `<li>${marked(name, opts)}</li>`).join('');
+  $('#user-stats').textContent = `${users.length} users online.`;
 }
 
 function login() {
