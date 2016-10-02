@@ -3,11 +3,18 @@
 let socket;
 let username;
 
-window.onload = init;
+window.onload = function () {
+  initSocket();
+  initEvents();
+};
 
-function init() {
-  // socket
-  socket = io.connect('http://localhost:' + (process.env.PORT || 3010));
+function $(sel) {
+  return document.querySelector(sel);
+}
+
+function initSocket() {
+  const server = $('#server-url').value.trim();
+  socket = io.connect(server);
   socket.on('message', (data) => {
     appendText(`${data.username}: ${data.text}`);
   });
@@ -25,14 +32,32 @@ function init() {
     appendText(`${data.username} disconnected.`);
     updateUserList(data.users);
   });
+}
 
-  // events
-  document.querySelector('#text-input').addEventListener('keydown', function (e) {
+function initEvents() {
+  let typingTimer;
+  let typing = false;
+
+  $('#text-input').addEventListener('keydown', function (e) {
     if (e.keyCode === 13) {
       sendText();
     }
   });
-  document.querySelector('#username').addEventListener('keydown', function (e) {
+  $('#text-input').addEventListener('input', function () {
+    if (!typing) {
+      typing = true;
+      socket.emit('typing', { username });
+    }
+    if (typingTimer) {
+      clearTimeout(typingTimer);
+      typingTimer = null;
+    }
+    typingTimer = setTimeout(function () {
+      typing = false;
+      socket.emit('stop-typing', { username });
+    }, 1000);
+  });
+  $('#username').addEventListener('keydown', function (e) {
     if (e.keyCode === 13) {
       const value = this.value.trim();
       if (value) {
@@ -41,11 +66,12 @@ function init() {
       }
     }
   });
-  document.querySelector('#send-btn').addEventListener('click', sendText);
+  $('#send-btn').addEventListener('click', sendText);
+  $('#username').focus();
 }
 
 function sendText() {
-  const inputField = document.querySelector('#text-input');
+  const inputField = $('#text-input');
   const text = inputField.value.trim();
   if (!text) return;
   socket.emit('message', { username, text });
@@ -53,7 +79,7 @@ function sendText() {
 }
 
 function appendText(text) {
-  document.querySelector('#chat-text').textContent += `${escapeHtml(text)}\n`;
+  $('#chat-text').textContent += `${escapeHtml(text)}\n`;
 }
 
 function escapeHtml(text) {
@@ -61,7 +87,7 @@ function escapeHtml(text) {
 }
 
 function setStatus(text) {
-  const node = document.querySelector('#chat-status-msg');
+  const node = $('#chat-status-msg');
   if (text) {
     node.textContent = text;
     node.classList.remove('hidden');
@@ -71,10 +97,10 @@ function setStatus(text) {
 }
 
 function updateUserList(users) {
-  document.querySelector('#users').innerHTML = Array.from(users).map(name => `<li>${name}</li>`).join('');
+  $('#users').innerHTML = Array.from(users).map(name => `<li>${name}</li>`).join('');
 }
 
 function login() {
   socket.emit('login', { username });
-  document.querySelector('#login-box').classList.add('hidden');
+  $('#login-box').classList.add('hidden');
 }
