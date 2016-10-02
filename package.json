@@ -6,18 +6,14 @@
   "scripts": {
     "test": "mocha ./test",
     "server": "node server.js",
-    "start": "npm run server && electron ."
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/demian85/team-capture-chat-de.git"
+    "url": "git+https://github.com/demian85/electron-chat-app-demo.git"
   },
   "author": "Demián Rodriguez",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/demian85/team-capture-chat-de/issues"
-  },
-  "homepage": "https://github.com/demian85/team-capture-chat-de#readme",
   "devDependencies": {
     "chai": "^3.5.0",
     "electron": "^1.4.2",
