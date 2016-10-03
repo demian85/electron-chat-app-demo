@@ -1,5 +1,5 @@
-const app = require('./lib/app').app;
+const server = require('./lib/server').server;
 
 const port = process.env.PORT || 3010;
 
-app.run(port);
+server.run(port);

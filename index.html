@@ -3,34 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>Electron Chat App</title>
-    <script type="text/javascript" src="socket.io.js"></script>
-    <script type="text/javascript" src="ui.js"></script>
+    <script type="text/javascript" src="lib/react.min.js"></script>
+    <script type="text/javascript" src="lib/react-dom.min.js"></script>
+    <script type="text/javascript" src="lib/socket.io.js"></script>
+    <script type="text/javascript" src="lib/ui.js"></script>
     <link rel="stylesheet" type="text/css" href="main.css" />
   </head>
   <body>
-    <main>
-      <div id="login-box">
-        <div>
-          <h2>Login</h2>
-          <input type="url" id="server-url" value="http://localhost:3010" />
-          <input type="text" placeholder="enter username" id="username" autofocus />
-        </div>
-      </div>
-      <div class="content">
-        <aside>
-          <h3>Connected Users</h3>
-          <ul id="users"></ul>
-          <div id="user-stats"></div>
-        </aside>
-        <div id="chat">
-          <div id="chat-text"></div>
-          <div id="chat-status-msg"></div>
-        </div>
-      </div>
-      <div class="input">
-        <input type="text" id="text-input" placeholder="say something..." />
-        <button id="send-btn">Send</button>
-      </div>
-    </main>
+
   </body>
 </html>
