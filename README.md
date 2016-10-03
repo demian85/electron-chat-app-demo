@@ -1,6 +1,7 @@
 # Simple Electron Chat App
 
-This is just a demo of a basic chat app using Electron. The server is included and must be run using Node.js
+This is just a demo of a basic chat app using Electron and React.
+The server is included and must be run using Node.js
 
 ## Tiny features
 
