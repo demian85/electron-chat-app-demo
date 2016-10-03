@@ -7,7 +7,7 @@ let typing = false;
 let typingTimer;
 
 document.addEventListener('DOMContentLoaded', function onLoad() {
-  app = React.createElement(App);
+  const app = React.createElement(App);
   ReactDOM.render(app, document.body);
 });
 
