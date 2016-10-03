@@ -4,7 +4,8 @@
   "description": "Electron Chat App Demo",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./test",
+    "test": "",
+    "build": "babel src -d lib",
     "server": "node server.js",
     "start": "electron ."
   },
@@ -15,12 +16,12 @@
   "author": "Demián Rodriguez",
   "license": "ISC",
   "devDependencies": {
-    "chai": "^3.5.0",
+    "babel-cli": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
     "electron": "^1.4.2",
     "eslint": "^3.7.0",
     "eslint-config-airbnb-base": "^8.0.0",
-    "eslint-plugin-import": "^1.16.0",
-    "mocha": "^3.1.0"
+    "eslint-plugin-import": "^1.16.0"
   },
   "dependencies": {
     "express": "4.14.0",
