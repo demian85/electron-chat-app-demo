@@ -11,16 +11,20 @@ document.addEventListener('DOMContentLoaded', function onLoad() {
   ReactDOM.render(app, document.body);
 });
 
-const App = React.createClass({
-  getInitialState() {
-    return {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
       username: '',
       url: '',
       users: [],
       messages: [],
       status: '',
     };
-  },
+    this.onLogin = this.onLogin.bind(this);
+    this.onInput = this.onInput.bind(this);
+    this.onSend = this.onSend.bind(this);
+  }
   initSocket(url) {
     this.setState({status: 'Connecting...'});
     const socket = io.connect(url);
@@ -46,20 +50,20 @@ const App = React.createClass({
       this.setState({users: data.users});
     });
     this.socket = socket;
-  },
+  }
   appendMessage(message) {
     this.setState((prev, props) => {
       const messages = prev.messages;
       messages.push(message);
       return { messages };
     });
-  },
+  }
   onLogin(url, username) {
     this.setState({url, username});
     this.initSocket(url);
     this.socket.emit('login', { username });
     this.refs.inputBar.focus();
-  },
+  }
   onInput(text) {
     const username = this.state.username;
     if (!typing) {
@@ -74,14 +78,14 @@ const App = React.createClass({
       typing = false;
       this.socket.emit('stop-typing', { username });
     }, 1000);
-  },
+  }
   onSend(text) {
     const username = this.state.username;
     this.socket.emit('message', { username, text });
-  },
+  }
   componentDidMount() {
     this.refs.loginBox.focus();
-  },
+  }
   render() {
     return (
       <main>
@@ -94,10 +98,17 @@ const App = React.createClass({
       </main>
     );
   }
-});
+}
 
-const LoginBox = React.createClass({
-  handleKeyDown(e) {
+class LoginBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onKeyDown = this.onKeyDown.bind(this);
+  }
+  focus() {
+    this.refs.username.focus();
+  }
+  onKeyDown(e) {
     if (e.keyCode === 13) {
       const value = this.refs.username.value.trim();
       const url = this.refs.url.value.trim();
@@ -106,24 +117,21 @@ const LoginBox = React.createClass({
         this.refs.root.classList.add('hidden');
       }
     }
-  },
-  focus() {
-    this.refs.username.focus();
-  },
+  }
   render() {
     return (
       <div id="login-box" ref="root">
         <div>
           <h2>Login</h2>
           <input type="url" id="server-url" ref="url" value={this.props.url} />
-          <input type="text" placeholder="enter username" id="username" ref="username" onKeyDown={this.handleKeyDown} autofocus />
+          <input type="text" placeholder="enter username" id="username" ref="username" onKeyDown={this.onKeyDown} autofocus />
         </div>
       </div>
     );
   }
-});
+}
 
-const UserList = React.createClass({
+class UserList extends React.Component {
   render() {
     const opts = { sanitize: true };
     const users = this.props.users.map(user => <li dangerouslySetInnerHTML={{__html: marked(user, opts)}}></li>)
@@ -135,9 +143,9 @@ const UserList = React.createClass({
       </aside>
     );
   }
-});
+}
 
-const ChatArea = React.createClass({
+class ChatArea extends React.Component {
   render() {
     const opts = { sanitize: true };
     const text = this.props.messages.map(msg => `${marked(msg, opts)}\n`).join('');
@@ -148,34 +156,50 @@ const ChatArea = React.createClass({
       </div>
     );
   }
-});
+}
 
-const InputBar = React.createClass({
+class InputBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onKeyDown = this.onKeyDown.bind(this);
+    this.onInput = this.onInput.bind(this);
+    this.onClick = this.onClick.bind(this);
+  }
   onKeyDown(e) {
     if (e.keyCode === 13) {
       this.send();
     }
-  },
-  onInput(e) {
+  }
+  onInput() {
     const value = this.refs.input.value.trim();
     this.props.onInput(value);
-  },
+  }
+  onClick() {
+    this.send();
+  }
   send() {
     const value = this.refs.input.value.trim();
     if (value) {
       this.props.onSend(value);
       this.refs.input.value = ''; // Should I mutate state instead?
     }
-  },
+  }
   focus() {
     this.refs.input.focus();
-  },
+  }
   render() {
     return (
       <div className="input">
-        <input type="text" id="text-input" ref="input" placeholder="say something..." onInput={this.onInput} onKeyDown={this.onKeyDown} />
-        <button id="send-btn" onClick={this.send}>Send</button>
+        <input
+          type="text"
+          id="text-input"
+          ref="input"
+          placeholder="say something..."
+          onInput={this.onInput}
+          onKeyDown={this.onKeyDown}
+        />
+        <button id="send-btn" onClick={this.onClick}>Send</button>
       </div>
     );
   }
-});
+}
