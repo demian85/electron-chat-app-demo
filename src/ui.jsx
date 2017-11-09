@@ -1,6 +1,6 @@
 /* eslint-env browser, node */
 /* global React */
-
+const notifier = require('node-notifier');
 const marked = require('marked');
 
 let typing = false;
@@ -31,13 +31,29 @@ class App extends React.Component {
     socket.on('connect', () => {
       this.appendMessage(`Connected to server ${this.state.url}`);
       this.setState({status: ''});
+      notifier.notify({
+        title: 'Electron Chat DEMO',
+        message: `Connected to server ${this.state.url}`,
+        wait: true,
+      });
+      notifier.on('click', function (obj, options) {
+        mainWindow.focus();
+      });
     });
     socket.on('message', (data) => {
       this.appendMessage(`__${data.username}:__ ${data.text}`);
+      notifier.notify({
+        'title': 'Electron Chat DEMO',
+        'message': `__${data.username}:__ ${data.text}`,
+      });
     });
     socket.on('login', (data) => {
       this.appendMessage(`${data.username} has logged in.`);
       this.setState({users: data.users});
+      notifier.notify({
+        'title': 'Electron Chat DEMO',
+        'message': `${data.username} has logged in.`,
+      });
     });
     socket.on('typing', (data) => {
       this.setState({status: `${data.username} is typing...`});
@@ -48,6 +64,10 @@ class App extends React.Component {
     socket.on('logout', (data) => {
       this.appendMessage(`${data.username} disconnected.`);
       this.setState({users: data.users});
+      notifier.notify({
+        'title': 'Electron Chat DEMO',
+        'message': `${data.username} disconnected.`,
+      });
     });
     this.socket = socket;
   }
