@@ -11,6 +11,7 @@ The server is included and must be run using Node.js
 * Informs connection and disconnection events.
 * Informs when someone is typing.
 * Supports multiple instances
+* Message notification.
 
 ## To Use
 
