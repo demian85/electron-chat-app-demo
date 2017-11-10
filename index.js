@@ -14,6 +14,10 @@ function createWindow() {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+
+    // Open dev tools.
+    mainWindow.webContents.openDevTools();
+
     global.mainWindow = mainWindow;
 }
 
