@@ -1,33 +1,39 @@
 {
-  "name": "electron-chat-app-demo",
-  "version": "1.0.0",
-  "description": "Electron Chat App Demo",
-  "main": "index.js",
-  "scripts": {
-    "test": "",
-    "build": "babel src -d lib",
-    "server": "node server.js",
-    "start": "electron ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/demian85/electron-chat-app-demo.git"
-  },
-  "author": "Demián Rodriguez",
-  "license": "ISC",
-  "devDependencies": {
-    "babel-cli": "^6.16.0",
-    "babel-preset-react": "^6.16.0",
-    "electron": "^1.4.2",
-    "eslint": "^3.7.0",
-    "eslint-config-airbnb": "^12.0.0",
-    "eslint-plugin-import": "^1.16.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0"
-  },
-  "dependencies": {
-    "express": "4.14.0",
-    "marked": "^0.3.6",
-    "socket.io": "1.4.8"
-  }
+    "name": "electron-chat-app-demo",
+    "version": "0.7.0",
+    "description": "Electron Chat App Demo",
+    "main": "index.js",
+    "scripts": {
+        "test": "",
+        "build": "babel src -d lib",
+        "server": "node server.js",
+        "start": "electron .",
+        "pack:win": "electron-packager . --platform=win32 --arch=all --out=pack/ --overwrite --ignore=\"(.git|.vscode|node_modules)\" --asar --asar-unpack-dir=node_modules/node-notifier/vendor/",
+        "pack:linux": "electron-packager . --platform=linux --arch=all --out=pack/ --overwrite --ignore=\"(.git|.vscode|node_modules)\" --asar --asar-unpack=node_modules/node-notifier/vendor/",
+        "pack:macos": ""
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/demian85/electron-chat-app-demo.git"
+    },
+    "author": "Demián Rodriguez",
+    "license": "ISC",
+    "devDependencies": {
+        "asar": "^0.14.0",
+        "babel-cli": "^6.16.0",
+        "babel-preset-react": "^6.16.0",
+        "electron-packager": "^9.1.0",
+        "eslint": "^3.7.0",
+        "eslint-config-airbnb": "^12.0.0",
+        "eslint-plugin-import": "^1.16.0",
+        "eslint-plugin-jsx-a11y": "^2.2.2",
+        "eslint-plugin-react": "^6.3.0"
+    },
+    "dependencies": {
+        "electron": "^1.4.2",
+        "express": "4.14.0",
+        "marked": "^0.3.6",
+        "node-notifier": "^5.1.2",
+        "socket.io": "1.4.8"
+    }
 }

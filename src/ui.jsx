@@ -1,10 +1,13 @@
 /* eslint-env browser, node */
 /* global React */
-
+const notifier = require('node-notifier');
 const marked = require('marked');
+const mainWindow = require('electron').remote.getGlobal('mainWindow');
 
 let typing = false;
 let typingTimer;
+
+var currentUser;
 
 document.addEventListener('DOMContentLoaded', function onLoad() {
   const app = React.createElement(App);
@@ -34,10 +37,35 @@ class App extends React.Component {
     });
     socket.on('message', (data) => {
       this.appendMessage(`__${data.username}:__ ${data.text}`);
+      if (data.username != currentUser) {
+        notifier.notify({
+          'title': 'Electron Chat DEMO (' + currentUser + ')',
+          'message': `${data.username}: ${data.text}`,
+          wait: true,
+        }, function (err, noData) {
+          console.log('waited');
+        }).on('click', function () {
+          console.log('Clicked');
+          mainWindow.show();
+          mainWindow.focus();
+        });
+      }
     });
     socket.on('login', (data) => {
       this.appendMessage(`${data.username} has logged in.`);
       this.setState({users: data.users});
+      if (data.username != currentUser) {
+        notifier.notify({
+          'title': 'Electron Chat DEMO (' + currentUser + ')',
+          'message': `${data.username} has logged in.`,
+          wait: true,
+        }, function (err, noData) {
+          console.log('Waited');
+          console.log(err, noData);
+        }).on('click', function () {
+          console.log('Clicked');
+        });
+      }
     });
     socket.on('typing', (data) => {
       this.setState({status: `${data.username} is typing...`});
@@ -48,6 +76,15 @@ class App extends React.Component {
     socket.on('logout', (data) => {
       this.appendMessage(`${data.username} disconnected.`);
       this.setState({users: data.users});
+      if (data.username != currentUser) {
+        notifier.notify({
+          'title': 'Electron Chat DEMO (' + currentUser + ')',
+          'message': `${data.username} disconnected.`,
+        }).on('click', function () {
+          mainWindow.show();
+          mainWindow.focus();
+        });
+      }
     });
     this.socket = socket;
   }
@@ -89,7 +126,7 @@ class App extends React.Component {
   render() {
     return (
       <main>
-        <LoginBox ref="loginBox" url="http://localhost:3010" onLogin={this.onLogin} />
+        <LoginBox ref="loginBox" url="http://chat.triplez.cn:3010" onLogin={this.onLogin} />
         <div className="content">
           <UserList users={this.state.users} />
           <ChatArea messages={this.state.messages} status={this.state.status} />
@@ -116,6 +153,8 @@ class LoginBox extends React.Component {
         this.props.onLogin(url, value);
         this.refs.root.classList.add('hidden');
       }
+      currentUser = value;
+      document.title = 'Electron Chat DEMO (' + value + ')';
     }
   }
   render() {
@@ -198,7 +237,7 @@ class InputBar extends React.Component {
           onInput={this.onInput}
           onKeyDown={this.onKeyDown}
         />
-        <button id="send-btn" onClick={this.onClick}>Send</button>
+        <a id="send-btn" className="waves-effect waves-light btn" onClick={this.onClick}>Send</a>
       </div>
     );
   }
