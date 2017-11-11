@@ -1,3 +1,4 @@
 node_modules/*
 electron-chat-app-demo-linux-x64
 .vscode
+pack

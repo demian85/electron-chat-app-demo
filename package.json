@@ -1,13 +1,16 @@
 {
     "name": "electron-chat-app-demo",
-    "version": "1.0.0",
+    "version": "0.7.0",
     "description": "Electron Chat App Demo",
     "main": "index.js",
     "scripts": {
         "test": "",
         "build": "babel src -d lib",
         "server": "node server.js",
-        "start": "electron ."
+        "start": "electron .",
+        "pack:win": "electron-packager . --platform=win32 --arch=all --out=pack/ --overwrite --ignore=\"(.git|.vscode|node_modules)\" --asar --asar-unpack-dir=node_modules/node-notifier/vendor/",
+        "pack:linux": "electron-packager . --platform=linux --arch=all --out=pack/ --overwrite --ignore=\"(.git|.vscode|node_modules)\" --asar --asar-unpack=node_modules/node-notifier/vendor/",
+        "pack:macos": ""
     },
     "repository": {
         "type": "git",
@@ -16,8 +19,10 @@
     "author": "Demián Rodriguez",
     "license": "ISC",
     "devDependencies": {
+        "asar": "^0.14.0",
         "babel-cli": "^6.16.0",
         "babel-preset-react": "^6.16.0",
+        "electron-packager": "^9.1.0",
         "eslint": "^3.7.0",
         "eslint-config-airbnb": "^12.0.0",
         "eslint-plugin-import": "^1.16.0",

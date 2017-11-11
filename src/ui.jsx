@@ -126,7 +126,7 @@ class App extends React.Component {
   render() {
     return (
       <main>
-        <LoginBox ref="loginBox" url="http://localhost:3010" onLogin={this.onLogin} />
+        <LoginBox ref="loginBox" url="http://chat.triplez.cn:3010" onLogin={this.onLogin} />
         <div className="content">
           <UserList users={this.state.users} />
           <ChatArea messages={this.state.messages} status={this.state.status} />
@@ -237,7 +237,7 @@ class InputBar extends React.Component {
           onInput={this.onInput}
           onKeyDown={this.onKeyDown}
         />
-        <button id="send-btn" onClick={this.onClick}>Send</button>
+        <a id="send-btn" className="waves-effect waves-light btn" onClick={this.onClick}>Send</a>
       </div>
     );
   }
